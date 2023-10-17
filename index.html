@@ -1,0 +1,315 @@
+
+    <!doctype html>
+    <html lang='en' data-bs-theme='dark'>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PoLEJ - Polish Open LLM Leaderboard</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+        <style>
+            th, td {
+                border-left: 1px solid #dee2e6;
+            }
+            th:first-child, td:first-child {
+                border-left: none;
+            }
+        </style>
+      </head>
+    <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand fs-3 link-primary" href="#" title="Polska Lista Ewaluacji Językowych"><i class="bi bi-trophy-fill"></i> PoLEJ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+          <ul class="nav ms-auto">
+            <li class="nav-item">
+              <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#aboutModal"><i class="bi bi-info-circle-fill"></i> About</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#tasksModal"><i class="bi bi-database-fill-gear"></i> Tasks</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" id="btnThemeSwitch"><i class="bi bi-circle-half"></i> Change Theme</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container-fluid">
+      <div class="row mt-3">
+        <div class="text-center">
+          <h2>Polish Open LLM Leaderboard</h2>
+        </div>
+      </div>
+
+      <div id="columnToggle" class="m-3">
+          <div class="card">
+              <div class="card-body small">
+                  <h5 class="card-title">Select columns to show</h5>
+                  <div class="row">
+                      <div class="col">
+                        <label><input type="checkbox" data-column-id="model_precision" checked> Precision </label>
+                      </div>
+                      <div class="col">
+                        <label><input type="checkbox" data-column-id="average_metrics" checked> Average </label>
+                      </div>
+    <div class='col'><label><input type='checkbox' data-column-id='polish_ppc' checked> PPC </label></div><div class='col'><label><input type='checkbox' data-column-id='polish_polemo2_in' checked> PolEmo2 In </label></div><div class='col'><label><input type='checkbox' data-column-id='polish_8tags' checked> 8TAGS </label></div><div class='col'><label><input type='checkbox' data-column-id='polish_belebele' checked> Belebele PL </label></div><div class='col'><label><input type='checkbox' data-column-id='en_belebele' checked> Belebele EN </label></div><div class='col'><label><input type='checkbox' data-column-id='polish_lek' checked> LEK </label></div><div class='col'><label><input type='checkbox' data-column-id='polish_psc' checked> PSC </label></div><div class='col'><label><input type='checkbox' data-column-id='polish_dyk' checked> DYK </label></div></div></div></div></div><table id='leaderboard-tbl' class='table table-striped small'><thead><tr><th>T</th><th>Model / Adapter</th><th id='model_precision'>Precision</th><th id='average_metrics' title='Calculated on polish_belebele, polish_ppc, polish_polemo2_in, polish_8tags'>Average</th><th id='polish_ppc'>PPC&nbsp;<sup class='text-danger' title='Included in Avg.'>A</sup></th><th id='polish_polemo2_in'>PolEmo2 In&nbsp;<sup class='text-danger' title='Included in Avg.'>A</sup></th><th id='polish_8tags'>8TAGS&nbsp;<sup class='text-danger' title='Included in Avg.'>A</sup></th><th id='polish_belebele'>Belebele PL&nbsp;<sup class='text-danger' title='Included in Avg.'>A</sup></th><th id='en_belebele'>Belebele EN</th><th id='polish_lek'>LEK</th><th id='polish_psc'>PSC</th><th id='polish_dyk'>DYK</th></tr></thead><tbody><tr><td title='Unknown'>N/A<span class='visually-hidden'>Unknown</span></td><td>Random Baseline</td><td>N/A</td><td>21.88</td><td>25.0</td><td>25.0</td><td>12.5</td><td>25.0</td><td>25.0</td><td>20.0</td><td>25.0</td><td>25.0</td></tr><tr><td title='fine-tuned'>🔶<span class='visually-hidden'>fine-tuned</span></td><td><a href="https://huggingface.co/Voicelab/trurl-2-7b" target="_blank" rel="noopener noreferrer">Voicelab/trurl-2-7b</a></td><td>float16</td><td>50.39</td><td>42.7</td><td>47.51</td><td>67.02</td><td>44.33</td><td>71.89</td><td>27.83</td><td>44.25</td><td>82.8</td></tr><tr><td title='RL-tuned'>🟦<span class='visually-hidden'>RL-tuned</span></td><td><a href="https://huggingface.co/meta-llama/Llama-2-7b-chat-hf" target="_blank" rel="noopener noreferrer">meta-llama/Llama-2-7b-chat-hf</a></td><td>float16</td><td>43.67</td><td>24.6</td><td>56.51</td><td>54.8</td><td>38.78</td><td>57.89</td><td>27.85</td><td>69.48</td><td>56.75</td></tr><tr><td title='pretrained'>🟢<span class='visually-hidden'>pretrained</span></td><td><a href="https://huggingface.co/mistralai/Mistral-7B-v0.1" target="_blank" rel="noopener noreferrer">mistralai/Mistral-7B-v0.1</a></td><td>bfloat16</td><td>41.65</td><td>38.9</td><td>18.42</td><td>53.96</td><td>55.33</td><td>77.78</td><td>27.85</td><td>32.0</td><td>6.41</td></tr><tr><td title='instruction-tuned'>⭕<span class='visually-hidden'>instruction-tuned</span></td><td><a href="https://huggingface.co/Azurro/llama-2-7b-qlora-polish-instruct" target="_blank" rel="noopener noreferrer">Azurro/llama-2-7b-qlora-polish-instruct</a></td><td>float16</td><td>35.47</td><td>3.5</td><td>60.53</td><td>45.84</td><td>32.0</td><td>45.78</td><td>20.55</td><td>61.97</td><td>16.91</td></tr><tr><td title='pretrained'>🟢<span class='visually-hidden'>pretrained</span></td><td><a href="https://huggingface.co/Azurro/llama-2-7b-qlora-polish" target="_blank" rel="noopener noreferrer">Azurro/llama-2-7b-qlora-polish</a></td><td>float16</td><td>24.59</td><td>8.9</td><td>21.05</td><td>35.18</td><td>33.22</td><td>43.56</td><td>19.99</td><td>57.05</td><td>19.14</td></tr><tr><td title='fine-tuned'>🔶<span class='visually-hidden'>fine-tuned</span></td><td><a href="https://huggingface.co/Voicelab/trurl-2-13b-academic" target="_blank" rel="noopener noreferrer">Voicelab/trurl-2-13b-academic</a></td><td>8bit</td><td>54.8</td><td>45.2</td><td>54.29</td><td>65.48</td><td>54.22</td><td>81.33</td><td>28.95</td><td>32.65</td><td>16.91</td></tr><tr><td title='pretrained'>🟢<span class='visually-hidden'>pretrained</span></td><td><a href="https://huggingface.co/meta-llama/Llama-2-7b-hf" target="_blank" rel="noopener noreferrer">meta-llama/Llama-2-7b-hf</a></td><td>float16</td><td>21.01</td><td>11.4</td><td>20.5</td><td>17.57</td><td>34.56</td><td>44.0</td><td>21.11</td><td>15.03</td><td>27.41</td></tr><tr><td title='pretrained'>🟢<span class='visually-hidden'>pretrained</span></td><td><a href="https://huggingface.co/Azurro/APT-1B-Base" target="_blank" rel="noopener noreferrer">Azurro/APT-1B-Base</a></td><td>float32</td><td>6.22</td><td>1.1</td><td>3.05</td><td>6.27</td><td>14.44</td><td>15.0</td><td>16.16</td><td>0.09</td><td>0.39</td></tr><tr><td title='RL-tuned'>🟦<span class='visually-hidden'>RL-tuned</span></td><td><a href="https://huggingface.co/meta-llama/Llama-2-13b-chat-hf" target="_blank" rel="noopener noreferrer">meta-llama/Llama-2-13b-chat-hf</a></td><td>8bit</td><td>51.39</td><td>55.7</td><td>45.15</td><td>54.16</td><td>50.56</td><td>75.56</td><td>24.75</td><td>69.94</td><td>16.91</td></tr><tr><td title='fine-tuned'>🔶<span class='visually-hidden'>fine-tuned</span></td><td><a href="https://huggingface.co/Typly/Pigeon-7B" target="_blank" rel="noopener noreferrer">Typly/Pigeon-7B</a></td><td>float16</td><td>19.21</td><td>0.1</td><td>26.32</td><td>25.21</td><td>25.22</td><td>39.33</td><td>17.48</td><td>0.0</td><td>11.37</td></tr><tr><td title='instruction-tuned'>⭕<span class='visually-hidden'>instruction-tuned</span></td><td><a href="https://huggingface.co/Azurro/Mistral-7B-Instruct-v0.1-qlora-polish" target="_blank" rel="noopener noreferrer">Azurro/Mistral-7B-Instruct-v0.1-qlora-polish</a></td><td>bfloat16</td><td>43.93</td><td>39.6</td><td>39.75</td><td>58.37</td><td>38.0</td><td>73.44</td><td>24.88</td><td>0.37</td><td>16.42</td></tr><tr><td title='pretrained'>🟢<span class='visually-hidden'>pretrained</span></td><td><a href="https://huggingface.co/tiiuae/falcon-7b" target="_blank" rel="noopener noreferrer">tiiuae/falcon-7b</a></td><td>bfloat16</td><td>15.08</td><td>6.7</td><td>16.2</td><td>12.53</td><td>24.89</td><td>23.56</td><td>18.53</td><td>3.34</td><td>0.0</td></tr><tr><td title='instruction-tuned'>⭕<span class='visually-hidden'>instruction-tuned</span></td><td><a href="https://huggingface.co/tiiuae/falcon-7b-instruct" target="_blank" rel="noopener noreferrer">tiiuae/falcon-7b-instruct</a></td><td>bfloat16</td><td>13.42</td><td>0.0</td><td>14.68</td><td>16.01</td><td>23.0</td><td>28.78</td><td>17.95</td><td>0.0</td><td>12.73</td></tr><tr><td title='RL-tuned'>🟦<span class='visually-hidden'>RL-tuned</span></td><td><a href="https://huggingface.co/codellama/CodeLlama-34b-hf" target="_blank" rel="noopener noreferrer">codellama/CodeLlama-34b-hf</a></td><td>4bit</td><td>36.66</td><td>0.2</td><td>44.88</td><td>57.02</td><td>44.56</td><td>62.78</td><td>22.96</td><td>1.95</td><td>48.59</td></tr><tr><td title='instruction-tuned'>⭕<span class='visually-hidden'>instruction-tuned</span></td><td><a href="https://huggingface.co/HuggingFaceH4/zephyr-7b-alpha" target="_blank" rel="noopener noreferrer">HuggingFaceH4/zephyr-7b-alpha</a></td><td>bfloat16</td><td>58.69</td><td>39.7</td><td>62.6</td><td>67.36</td><td>65.11</td><td>82.56</td><td>33.38</td><td>22.17</td><td>16.91</td></tr><tr><td title='instruction-tuned'>⭕<span class='visually-hidden'>instruction-tuned</span></td><td><a href="https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1" target="_blank" rel="noopener noreferrer">mistralai/Mistral-7B-Instruct-v0.1</a></td><td>bfloat16</td><td>49.66</td><td>50.6</td><td>48.89</td><td>55.72</td><td>43.44</td><td>74.56</td><td>28.79</td><td>29.04</td><td>47.04</td></tr><tr><td title='pretrained'>🟢<span class='visually-hidden'>pretrained</span></td><td><a href="https://huggingface.co/Azurro/APT2-1B-Base" target="_blank" rel="noopener noreferrer">Azurro/APT2-1B-Base</a></td><td>float32</td><td>12.67</td><td>0.0</td><td>16.2</td><td>12.58</td><td>21.89</td><td>19.44</td><td>17.84</td><td>0.0</td><td>0.0</td></tr>
+           </tbody>
+        </table>
+        <div class="my-2 ms-2">
+            <span class="small"><sup class="text-danger">A</sup> - Included in 'Average' Calculation</span>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center small">
+                &#169; 2023 <a href="https://azurro.pl" target="_blank" rel="noopener noreferrer">Azurro</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="aboutModalLabel"><i class="bi bi-info-circle-fill"></i> About</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>
+            <strong>PoLEJ</strong> - Polska Lista Ewaluacji Językowych
+            </p>
+            <p>
+            The Polish Open LLM Leaderboard aims to track, rank, and evaluate open LLMs specifically for Polish. 
+            Right now, we limit the list of models to those that can run on a single consumer GPU with up to 24GB of VRAM. 
+            We believe it helps the Polish community pick up the right models more quickly and efficiently.
+            </p>
+            <p>
+            If you want us to add a new model to the leaderboard or if you want to contribute, please contact us at <a href="mailto:polej@azurro.pl">polej@azurro.pl</a>.
+            </p>
+            <div class="accordion" id="accordionCitation">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCitation" aria-expanded="false" aria-controls="collapseCitation">
+                    Citation
+                  </button>
+                </h2>
+                <div id="collapseCitation" class="accordion-collapse collapse" data-bs-parent="#accordionCitation">
+                  <div class="accordion-body">
+                    Copy the following snippet to cite these results:
+                    <pre>
+                      <code>
+    @misc{polish-open-llm-leaderboard,
+      author    = {Krzysztof Ociepa},
+      title     = {Polish Open LLM Leaderboard},
+      year      = {2023},
+      publisher = {Azurro},
+      url       = {https://polej.azurro.pl}
+    }
+    @software{eval-harness,
+      author       = {Gao, Leo and
+                      Tow, Jonathan and
+                      Abbasi, Baber and
+                      Biderman, Stella and
+                      Black, Sid and
+                      DiPofi, Anthony and
+                      Foster, Charles and
+                      Golding, Laurence and
+                      Hsu, Jeffrey and
+                      Le Noac'h, Alain and
+                      Li, Haonan and
+                      McDonell, Kyle and
+                      Muennighoff, Niklas and
+                      Ociepa, Chris
+                      Phang, Jason and
+                      Reynolds, Laria and
+                      Schoelkopf, Hailey and
+                      Skowron, Aviya and
+                      Sutawika, Lintang and
+                      Tang, Eric and
+                      Thite, Anish and
+                      Wang, Ben and
+                      Wang, Kevin and
+                      Zou, Andy},
+      title        = {A framework for few-shot language model evaluation},
+      month        = sep,
+      year         = 2021,
+      publisher    = {Zenodo},
+      version      = {v0.0.1},
+      doi          = {10.5281/zenodo.5371628},
+      url          = {https://doi.org/10.5281/zenodo.5371628}
+    }
+                      </code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="tasksModal" tabindex="-1" aria-labelledby="tasksModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="tasksModalLabel"><i class="bi bi-database-fill-gear"></i> Tasks</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            We evaluate open language models on the following benchmarks using the <a href="https://github.com/EleutherAI/lm-evaluation-harness" target="_blank">Eleuther AI Language Model Evaluation Harness</a>:
+            <ul>
+              <li><a href="https://huggingface.co/datasets/facebook/belebele">Belebele</a> - The Belebele Benchmark for Massively Multilingual NLU Evaluation</li>
+              <li><a href="https://huggingface.co/datasets/sdadas/ppc">PPC</a> - Polish Paraphrase Corpus</li>
+              <li><a href="https://huggingface.co/datasets/allegro/klej-polemo2-in">PolEmo2 In</a> - The PolEmo2.0 In-Domain</li>
+              <li><a href="https://huggingface.co/datasets/sdadas/8tags">8TAGS</a> - The 8 tags Benchmark</li>
+              <li><a href="https://huggingface.co/datasets/allegro/klej-psc">PSC</a> - The Polish Summaries Corpus</li>
+              <li><a href="https://huggingface.co/datasets/allegro/klej-dyk">DYK</a> - Czy wiesz?</li>
+              <li>LEK - Polish LEK (Lekarski Egzamin Końcowy) questions. This is a private dataset with over 5000 questions from the past few years.</li>
+            </ul>
+            For all these evaluations, we use the 0-shot approach and the greedy_until model output type. Using regex filters, we extract answers from the model's response and then calculate accuracy. A higher score indicates better performance.<br>
+            <br>
+            Here is a list of sample prompts for each task.
+            <ul>
+              <li>
+                <a href="https://huggingface.co/datasets/facebook/belebele">Belebele</a>
+                <p class="small">
+                Fragment: "Słońce nie ma takiej skorupy jak Ziemia, na której możesz stać. Słońce jest w całości z gazów, ognia oraz plazmy. Gaz rozrzedza się w miarę oddalania się od środka Słońca. Zewnętrzna obręcz, którą widzimy, patrząc na Słońce, nazywana jest fotosferą, co dosłownie oznacza „kulę światła”."<br>
+                Pytanie: "Co staje się cieńsze w miarę oddalania się od środka Słońca?"<br>
+                Możliwe odpowiedzi:<br>
+                A - Plazma<br>
+                B - Ogień<br>
+                C - Gaz<br>
+                D - Skorupa<br>
+                Prawidłowa odpowiedź:
+                </p>
+              </li>
+              <li>
+                <a href="https://huggingface.co/datasets/sdadas/ppc">PPC</a>
+                <p class="small">
+                Zdanie A: "Prezydent Obama urodził się w Stanach Zjednoczonych."<br>
+                Zdanie B: "Barack Obama urodził się w Ameryce."<br>
+                Pytanie: jaka jest zależność między zdaniami A i B? Możliwe odpowiedzi:<br>
+                A - wszystkie odpowiedzi poprawne<br>
+                B - znaczą dokładnie to samo<br>
+                C - mają podobne znaczenie<br>
+                D - mają różne znaczenie<br>
+                Prawidłowa odpowiedź:
+                </p>
+              </li>
+              <li>
+                <a href="https://huggingface.co/datasets/allegro/klej-polemo2-in">PolEmo2 In</a>
+                <p class="small">
+                Opinia: "Nie wspominam jego Osoby przyjaznie wręcz przeciwnie dla pacjentów oschły albo agresywny odnoszenie się uniesionym głosem do osób starszych i nie tylko . . . : ( ( co do wiedzy nie moge sie wypowiedziec bo sam przezucił mnie w rece innego lekarza . . . moje szczeście w nieszczęściu . . ."<br>
+                Określ sentyment podanej opinii. Możliwe odpowiedzi:<br>
+                A - Neutralny<br>
+                B - Negatywny<br>
+                C - Pozytywny<br>
+                D - Niejednoznaczny<br>
+                Prawidłowa odpowiedź:
+                </p>
+              </li>
+              <li>
+                <a href="https://huggingface.co/datasets/sdadas/8tags">8TAGS</a>
+                <p class="small">
+                Tytuł: "Druga osoba wyleczona z HIV (od 1, 5 roku)."<br>
+                Pytanie: jaka kategoria najlepiej pasuje do podanego tytułu?<br>
+                Możliwe odpowiedzi:<br>
+                A - film<br>
+                B - historia<br>
+                C - jedzenie<br>
+                D - medycyna<br>
+                E - motoryzacja<br>
+                F - praca<br>
+                G - sport<br>
+                H - technologie<br>
+                Prawidłowa odpowiedź:
+                </p>
+              </li>
+              <li>
+                <a href="https://huggingface.co/datasets/allegro/klej-psc">PSC</a>
+                <p class="small">
+                Fragment 1: "Z każdym rokiem zmniejsza się udział TVP w rynku telewizyjnym. To dobrzej. Im większa będzie ofensywa telewizji prywatnych, tym szybciej ludzie TVP uświadomią sobie, że nie mają sensu próby pokonania konkurencji w szeroko rozumianej komercji. pieniądze z reklamy zablokowały reformy w TVP. TVP miota się od misji do komercji i z powrotem. Ci, którzy mają wpływ na TVP, powinni uświadomić sobie, że TVP nie jest za darmo."<br>
+                Fragment 2: "Próby podbierania wyborców będą główną osią kampanii do parlamentu. Stawka najsilniejszych jest wyrównana i niezmienna od miesięcy. Liderzy to SLD i AWS. Za nimi plasują się PSL, UW, ROP i UP. AWS i SLD trudno będzie podbierać sobie głosy. O preferencjach politycznych Polaków wciąż często decyduje przeszłość. Duże znaczenie dawnych podziałów świadczy o tym, że nadchodzące wybory będą wyborami identyfikacji ideologicznej, nie zaś walką programów."<br>
+                Pytanie: jaka jest zależność między fragmentami 1 i 2?<br>
+                Możliwe odpowiedzi:<br>
+                A - wszystkie odpowiedzi poprawne<br>
+                B - dotyczą tego samego artykułu<br>
+                C - dotyczą różnych artykułów<br>
+                D - brak poprawnej odpowiedzi<br>
+                Prawidłowa odpowiedź:
+                </p>
+              </li>
+              <li>
+                <a href="https://huggingface.co/datasets/allegro/klej-dyk">DYK</a>
+                <p class="small">
+                Pytanie: "która część zamku Habsburg zachowała się do czasów współczesnych?"<br>
+                Sugerowana odpowiedź: "Do czasów współczesnych zachowała się narożna wieża zamku średniego (przedzamcza), część murów obwodowych oraz piwnice zamku wysokiego."<br>
+                Czy sugerowana odpowiedź na zadane pytanie jest poprawna? Możliwe opcje:<br>
+                A - brakuje sugerowanej odpowiedzi<br>
+                B - nie, sugerowana odpowiedź nie jest poprawna<br>
+                C - tak, sugerowana odpowiedź jest poprawna<br>
+                D - brakuje pytania<br>
+                Prawidłowa opcja:
+                </p>
+              </li>
+              <li>
+                LEK
+                <p class="small">
+                Metadon jest:<br>
+                A - Częściowym agonistą receptorów NMDA<br>
+                B - Częściowym agonistą receptorów Ach<br>
+                C - Częściowym agonistą receptorów GABA<br>
+                D - Agonistą receptorów opioidowych<br>
+                E - Antagonistą receptorów GABA<br>
+                Odpowiedz krótko A, B, C, D lub E. Prawidłowa odpowiedź:
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            var table = $('#leaderboard-tbl').DataTable({
+                "paging": false,
+                "info": false,
+                "searching": false,
+                "order": [[3, 'desc']]
+            });
+            
+            $('#columnToggle input[type="checkbox"]').on('change', function() {
+                // Get the column ID from the checkbox data attribute
+                var colId = $(this).data('column-id');
+                
+                // Hide or show the column using the column().search() method of DataTables
+                var column = table.column('#' + colId);
+                if (column) {
+                    column.visible($(this).prop('checked'));
+                }
+            });
+            
+            $('#btnThemeSwitch').on('click', function() {
+                if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+                    document.documentElement.setAttribute('data-bs-theme', 'light');
+                }
+                else {
+                    document.documentElement.setAttribute('data-bs-theme', 'dark');
+                }
+            });
+        });
+
+    </script>
+    </body></html>
+    
